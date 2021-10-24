@@ -79,4 +79,4 @@ def sum(sid, data):
 @sio.event
 def message(sid, data):
     with sio.session(sid) as session:
-        sio.emit('message', {session['username']: data});
+        sio.emit('message', {session['username']: data}, skip_sid=sid);

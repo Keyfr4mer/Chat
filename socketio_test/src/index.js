@@ -1,7 +1,14 @@
 import {Encryption_Functions} from "./encryption_functions.js";
 
 const pgp = new Encryption_Functions();
-const isFistMessage = true;
+let isFirstSent = true;
+let isFirstReceived = true;
+const own_username = window.location.hash.substring(1);
+
+let next_public_key;
+let privateKey;
+let publicKey;
+
 
 const sio = io({
     transportOptions: {
@@ -54,24 +61,41 @@ var message_form = document.getElementById("message-form");
 var message = document.getElementById("message");
 message_form.addEventListener("submit", async (e)=>{
     e.preventDefault();
-    if (message.value || isFistMessage) {
-        const {privateKey, publicKey} = await pgp.make_key_pair();
-        sio.emit('message', publicKey);
-        message.value = "";
-        isFistMessage = false;
+    if (message.value && isFirstSent) {
+        ({privateKey, publicKey} = await pgp.make_key_pair());
+        sio.emit('message', publicKey + message.value);
+        isFirstSent = false;
     }
-    else if (message.value) {
-        const {privateKey, publicKey} = await pgp.make_key_pair()
-        const message = pgp.encrypt_message(privateKey, publicKey, message.value + publicKey)
-        sio.emit('message', message);
-        message.value = "";
+    else if (message.value && !isFirstSent) {
+        ({privateKey, publicKey} = await pgp.make_key_pair());
+        const encrypted = await pgp.encrypt_message(privateKey, next_public_key, publicKey + message.value)
+        sio.emit('message', encrypted);
+        console.log(encrypted);
     }
+
+    var item = document.createElement('li');
+    item.textContent =  own_username + " > " + message.value;
+    messages.appendChild(item);
+    window.scrollTo(0, document.body.scrollHeight)
+    message.value = "";
 });
 
-sio.on('message', function(msg) {
+sio.on('message', async function(msg) {
+    var username = Object.keys(msg)[0];
     var item = document.createElement('li');
-    var username = Object.keys(msg)[0]
-    item.textContent =  username + "> " + msg[username];
+    
+    if (isFirstReceived){
+        next_public_key = msg[username].slice(0, 627);
+        item.textContent =  username + " > " + msg[username].slice(627);
+        isFirstReceived = false;
+    }
+    else{
+        const decrypted = await pgp.decrypt_message(privateKey, publicKey, msg[username]);
+        console.log(decrypted);
+        next_public_key = decrypted.slice(0, 627);
+        item.textContent = username + " > " + decrypted.slice(627);
+    }
+    
     messages.appendChild(item);
     window.scrollTo(0, document.body.scrollHeight);
   });

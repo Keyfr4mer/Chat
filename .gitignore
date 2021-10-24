@@ -1,2 +1,3 @@
 .vscode/settings.json
 ./socketio_test/__pycache__
+./socketio_test/node_modules

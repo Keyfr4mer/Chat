@@ -6,4 +6,7 @@ module.exports = {
    filename: 'main.js',
     path: path.resolve(__dirname, 'public'),
   },
+  optimization: {
+    minimize: false
+  },
 };
