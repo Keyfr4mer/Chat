@@ -1,1 +1,2 @@
 .vscode/settings.json
+./socketio_test/__pycache__
