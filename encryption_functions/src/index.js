@@ -11,22 +11,17 @@ class Encryption_Functions {
             format: 'armored' // output key format, defaults to 'armored' (other options: 'binary' or 'object')
         });
     
-        console.log(privateKey);     // '-----BEGIN PGP PRIVATE KEY BLOCK ... '
-        console.log(publicKey);      // '-----BEGIN PGP PUBLIC KEY BLOCK ... '
-        console.log(revocationCertificate); // '-----BEGIN PGP PUBLIC KEY BLOCK ... '
         return {privateKey, publicKey};
     };
 
 
-    async encrypt_message (privKey, pubKey) {
+    async encrypt_message (privKey, pubKey, text) {
         const publicKey = await openpgp.readKey({ armoredKey: pubKey });
-        console.log(publicKey);
     
         const privateKey = await openpgp.readPrivateKey({ armoredKey: privKey });
-        console.log(privateKey);
     
         const encrypted = await openpgp.encrypt({
-            message: await openpgp.createMessage({ text: 'Hello, World!' }), // input as Message object
+            message: await openpgp.createMessage({ text: text }), // input as Message object
             encryptionKeys: publicKey,
             signingKeys: privateKey // optional
         });
