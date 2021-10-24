@@ -1,6 +1,7 @@
 import {Encryption_Functions} from "./encryption_functions.js";
 
-const cock = new Encryption_Functions();
+const pgp = new Encryption_Functions();
+const isFistMessage = true;
 
 const sio = io({
     transportOptions: {
@@ -51,10 +52,18 @@ sio.on('user_left', (username) => {
 var messages = document.getElementById('messages');
 var message_form = document.getElementById("message-form");
 var message = document.getElementById("message");
-message_form.addEventListener("submit",(e)=>{
+message_form.addEventListener("submit", async (e)=>{
     e.preventDefault();
-    if (message.value) {
-        sio.emit('message', message.value);
+    if (message.value || isFistMessage) {
+        const {privateKey, publicKey} = await pgp.make_key_pair();
+        sio.emit('message', publicKey);
+        message.value = "";
+        isFistMessage = false;
+    }
+    else if (message.value) {
+        const {privateKey, publicKey} = await pgp.make_key_pair()
+        const message = pgp.encrypt_message(privateKey, publicKey, message.value + publicKey)
+        sio.emit('message', message);
         message.value = "";
     }
 });
