@@ -1,0 +1,103 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+
+.container{
+    display: grid;
+    height: 100vh;
+    grid-template-columns: 0.2fr 0.8fr;
+    grid-template-rows: 0fr 0.8fr 7.4fr 0.8fr;
+    grid-template-areas:
+        "h1 h1"
+        "nav1 nav2"
+        "sidebar messages"
+        "sidebar message-form";
+    grid-gap: 0.2rem;
+    font-size: 20px;
+}
+
+h1{
+    grid-area: h1;
+    font-size: 30px;
+}
+nav{
+    background-color: lightslategray;
+    border-radius: 0.4rem;
+}
+
+#nav1{
+    grid-area: nav1;
+}
+
+#nav2{
+    grid-area: nav2;
+}
+
+#sidebar{
+    background-color: cadetblue;
+    border-radius: 0.4rem;
+    grid-area: sidebar;
+}
+
+#message-form{
+    background-color: darkslategrey;
+    border-radius: 0.4rem;
+    grid-area: message-form;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+}
+
+#messages{
+    background-color: dimgray;
+    border-radius: 0.4rem;
+    grid-area: messages;
+    margin: 0;
+}
+
+#message{
+    background-color: aliceblue;
+    border-radius: 1.5rem;
+    margin: 0;
+    padding: 0;
+    width: 88%;
+    height: 70%;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+#send{
+    margin: 0;
+    padding: 0;
+    width: 10%;
+    height: 70%;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+label[for="message"]{
+    display: none;
+}
+
+@media only screen and (max-width: 1000px) {
+    .container{
+        font-size: 30px;
+
+        grid-template-columns: 1fr;
+        grid-template-rows: 0fr 0.8fr 7.4fr 0.8fr;
+        grid-template-areas:
+        "h1"
+        "nav2"
+        "messages"
+        "message-form";
+    }
+
+    #sidebar{
+        display: none;
+    }
+
+    #nav1{
+        display: none;
+    }
+}

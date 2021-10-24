@@ -3,17 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <title>yeeeet!</title>
+    <link rel="stylesheet" type="text/css" href="index.css">
 </head>
 <body>
-    <h1>Yeet Messenger</h1>
-    <ul id="messages"></ul>
-    <form id = "message-form">
-        <label for="message">Message:</label><br>
-        <input type="text" id="message" name="message">
-        <input type="submit" value="Send">
-    </form>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.3/socket.io.min.js"></script>
-    <script src="/index.js"></script>
-
+    <div class="container">
+        <!-- <h1>Yeet Messenger</h1> -->
+        <nav id="nav1">Nav1</nav>
+        <nav id="nav2">Nav2</nav>
+        <div id="sidebar">Sidebar</div>
+        <ul id="messages"></ul>
+        <form id = "message-form">
+            <label for="message">Message:</label><br>
+            <input type="text" id="message" name="message">
+            <input type="submit" id="send" value="Send">
+        </form>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.3/socket.io.min.js"></script>
+        <script src="/index.js"></script>
+    </div>
 </body>
 </html>
