@@ -1,10 +1,9 @@
-import Button from './Button'
+import Button from './Button';
 
 const Header = () => {
     return (
         <header className='Header'>
-            <h1>Dies ist ein fedder Header!</h1>
-            <Button color='green' text='Cock'/>
+            <h1>Messenger</h1>
         </header>
     )
 }

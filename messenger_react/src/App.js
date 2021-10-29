@@ -1,8 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
 import {Encryption_Functions} from "./encryption_functions.js";
-import { useState, useEffect } from 'react'
-import Header from './components/Header'
+import { useState, useEffect } from 'react';
+import Header from './components/Header';
+import Chatfenster from './components/Chatfenster';
 
 
 function App() {
@@ -17,16 +18,19 @@ function App() {
     fetchData();
   }, []);
 
-  console.log('Deine Mudder frisst gerne die Scheisse aus dem After der Kuh heraus mmmmmmh lecker')
-  console.log(keys[0]);
-  console.log(keys[1]);
+
+  const [texts, setTexts] = useState([]);
+
+  const addText = (text, sent) => {
+    const now = new Date().toISOString()
+    setTexts(texts.concat({id: texts.length, text: text, date: now, sent: sent}))
+  }
+
 
   return (
     <div className="App">
       <Header />
-      <h2>{keys[0]}</h2>
-      <h2>{keys[1]}</h2>
-      <h1>The name is Shlock and the address is 221222b2222221 street!</h1>
+      <Chatfenster onText={addText} texts={texts}/>
     </div>
   );
 }
