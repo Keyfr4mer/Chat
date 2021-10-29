@@ -1,8 +1,11 @@
+import Button from './Button'
+
 const Header = () => {
     return (
-        <div>
-            
-        </div>
+        <header className='Header'>
+            <h1>Dies ist ein fedder Header!</h1>
+            <Button color='green' text='Cock'/>
+        </header>
     )
 }
 

@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import {Encryption_Functions} from "./encryption_functions.js";
 import { useState, useEffect } from 'react'
+import Header from './components/Header'
 
 
 function App() {
@@ -22,10 +23,10 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Dei Mudda</h1>
+      <Header />
       <h2>{keys[0]}</h2>
       <h2>{keys[1]}</h2>
-      <h1>The name is Shlock and the address is 221222b221 street!</h1>
+      <h1>The name is Shlock and the address is 221222b2222221 street!</h1>
     </div>
   );
 }
