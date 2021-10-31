@@ -1,10 +1,10 @@
 import Texteingabe from "./Texteingabe";
 import Nachrichtenfenster from "./Nachrichtenfenster";
 
-function Chatfenster({onText, texts, socket}) {
+function Chatfenster({onText, onKeys, texts, socket}) {
     return (
         <div>
-            <Texteingabe onText={onText} socket={socket}/>
+            <Texteingabe onText={onText} onKeys={onKeys} socket={socket}/>
             <Nachrichtenfenster texts={texts}/>
         </div>
     )

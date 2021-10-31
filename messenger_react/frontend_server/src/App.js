@@ -17,11 +17,13 @@ function App() {
     const now = new Date().toISOString()
     setTexts(texts.concat({id: texts.length, text: text, date: now, sent: sent}))
   }
+
+  const changeKeys = (newkeys) => {
+    setKeys(newkeys)
+  }
   
   useEffect(() => {
     async function fetchData() {
-      setKeys(await pgpstuff.make_key_pair());
-      console.log('yeet');
       do_setup(); 
     }
     fetchData();
@@ -36,7 +38,7 @@ function App() {
   return (
     <div className="App">
       <Header />
-      <Chatfenster onText={addText} texts={texts} socket ={socket}/>
+      <Chatfenster onText={addText} onKeys={changeKeys} texts={texts} socket ={socket} />
     </div>
   );
 }
